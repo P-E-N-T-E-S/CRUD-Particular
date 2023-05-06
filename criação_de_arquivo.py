@@ -5,7 +5,7 @@ def conferirarquivo():
         a = open('controle.csv', 'rt')
         a.close()
     except:
-        print('\33[31marquivo não existente, criando arquivo...\33[m')
+        print('\33[31mArquivo não existente, criando arquivo...\33[m')
         existencia = False
     return(existencia)
 def criararquivo():
@@ -14,7 +14,9 @@ def criararquivo():
     if not existencia:
         with open('controle.csv', 'w') as arquivo:
             writer = csv.writer(arquivo, delimiter=',')
-            writer.writerow(['ordem', 'nome', 'categoria', 'valor'])
-        print('\33[32marquivo controle.csv criado, com sucesso\33[m')
+            writer.writerow(['ordem', 'nome', 'categoria', 'valor', 'data', 'hora'])
+        print('\33[32mArquivo controle.csv criado, com sucesso\33[m')
     else:
-        print('encontrado arquivo controle.csv')
+        print('Encontrado arquivo controle.csv')
+
+criararquivo()
