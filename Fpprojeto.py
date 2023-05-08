@@ -21,7 +21,7 @@ while True:
             if resposta == 1:
                 crud.adicionar(arq,ordem = crud.ler_ultimo_index(arq) ,data= date.datetime.now().strftime('%d/%m/%Y'), hora= date.datetime.now().strftime('%X'))
             elif resposta == 2:
-                print()
+                crud.atualizar(arq)
             elif resposta == 3:
                 print()
             elif resposta == 4:
