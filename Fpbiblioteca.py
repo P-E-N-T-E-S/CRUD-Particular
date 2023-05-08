@@ -25,7 +25,7 @@ def menu(list):
     '''Informe valores em forma de lista; essa função transforma a lista em formato de menu'''
     c = 1
     for item in list:
-        print(f'\033[33m{c}\033[m  - \033[34m{item}\033[m')
+        print(f'\033[34m{c}\033[m - \033[34m{item}\033[m')
         c +=1
     print(linha())
     opc = leiaInt('\033[32mSua Opção: \033[m')

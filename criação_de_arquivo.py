@@ -11,12 +11,12 @@ def conferirarquivo():
 def criararquivo():
     import csv
     existencia = conferirarquivo()
+    nome = 'controle.csv'
     if not existencia:
-        with open('controle.csv', 'w') as arquivo:
+        with open(nome, 'w') as arquivo:
             writer = csv.writer(arquivo, delimiter=',')
             writer.writerow(['ordem', 'nome', 'categoria', 'valor', 'data', 'hora'])
         print('\33[32mArquivo controle.csv criado, com sucesso\33[m')
     else:
         print('Encontrado arquivo controle.csv')
-
-criararquivo()
+    return(nome)

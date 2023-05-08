@@ -1,1 +1,5 @@
-ordem,nome,categoria,valor,data,hora
+ordem,nome,categoria,valor,data,hora
+sorvete,lazer,10.5
+encanamento,casa,400.0
+salvavidas,casa,500.0
+cafe,lazer,30.0
