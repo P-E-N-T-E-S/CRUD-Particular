@@ -18,9 +18,9 @@ while True:
             print(linha())
             resposta = menu(['Adição', 'Atualização','Deleção', 'Voltar'])
             if resposta == 1:
-                crud.adicionar(arq, index, data=, hora=)
+                crud.adicionar(arq)
             elif resposta == 2:
-                print()
+                crud.atualizar(arq)
             elif resposta == 3:
                 print()
             elif resposta == 4:
