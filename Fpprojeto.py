@@ -4,6 +4,7 @@ from Fpbiblioteca import *
 from time import sleep
 import CRUD as crud
 import criação_de_arquivo as ca
+import datetime as date
 os.system("cls")
 arq = ca.criararquivo()
 while True:
@@ -18,7 +19,7 @@ while True:
             print(linha())
             resposta = menu(['Adição', 'Atualização','Deleção', 'Voltar'])
             if resposta == 1:
-                crud.adicionar(arq)
+                crud.adicionar(arq,ordem = crud.ler_ultimo_index(arq) ,data= date.datetime.now().strftime('%d/%m/%Y'), hora= date.datetime.now().strftime('%X'))
             elif resposta == 2:
                 crud.atualizar(arq)
             elif resposta == 3:

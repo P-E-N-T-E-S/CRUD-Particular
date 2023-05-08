@@ -1,10 +1,21 @@
 import csv
-def adicionar(arq):
-    with open(arq, "a", utf-8) as arquivo:
+
+def ler_ultimo_index(arq):
+    with open(arq,'r') as arquivo:
+        arquivo_csv = csv.reader(arquivo, delimiter = ',')
+        ultima_linha = []
+        for linha in arquivo_csv:
+            ultima_linha = linha
+    return int(ultima_linha[0])
+
+
+
+def adicionar(arq, ordem, data, hora):
+    with open(arq, "a") as arquivo:
             categoria = input("Digite a categoria da transação: ")
             valor = float(input("Digite o valor da transação: "))
             nome = input("Digite o nome da transação: ")
-            arquivo.write(f"\n{nome},{categoria},{valor}")
+            arquivo.write(f"\n{ordem +1},{nome},{categoria},{valor},{data},{hora}")
 
 def ler(arq):
     with open(arq, 'r', encoding='utf-8') as arquivo:
