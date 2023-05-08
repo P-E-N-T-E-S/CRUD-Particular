@@ -3,17 +3,8 @@ def adicionar(arq):
     with open(arq, "a") as arquivo:
             categoria = input("Digite a categoria da transação: ")
             valor = float(input("Digite o valor da transação: "))
-            oque = input("Digite o nome da transação: ")
-            writer = csv.writer(arquivo, delimiter=',')
-            writer.writerow(['\n', oque, categoria, valor])
-            #arquivo.write(f"{categoria};{valor};{oque}")
-
-def ler(arq):
-    with open(arq, "r") as arquivo:
-        arquivo_csv = csv.reader(arquivo, delimiter=",")
-        for linha in arquivo_csv:
-            print(linha)
-        input('digite enter para voltar')
+            nome = input("Digite o nome da transação: ")
+            arquivo.write(f"\n{nome},{categoria},{valor}")
 
 def atualizar():
     memoria_csv = []
@@ -40,12 +31,16 @@ def atualizar():
             writer.writerow(i)
 
 
-def ler2(arq):
+def ler(arq):
     with open(arq, 'r') as arquivo:
         memoria_csv = []
         arquivo_csv = csv.reader(arquivo, delimiter = ',')
         for linha in arquivo_csv:
-            memoria_csv.append(linha[0].split(','))
-        print(memoria_csv)
+            memoria_csv.append(linha)
+        for c in memoria_csv:
+            for a in range(len(c)):
+                print(c[a].ljust(9), end=' ')
+            print()
+        input('digite enter para prosseguir')
 
 

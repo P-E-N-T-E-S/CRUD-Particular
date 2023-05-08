@@ -11,7 +11,7 @@ while True:
     cabeçalho('MENU')
     resposta = menu(['Ler','Alterar','Encerrar'])
     if resposta == 1:
-        crud.ler2(arq)
+        crud.ler(arq)
     elif resposta == 2:
         while True:
             os.system("cls")
