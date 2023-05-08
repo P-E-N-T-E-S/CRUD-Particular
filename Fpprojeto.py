@@ -18,7 +18,7 @@ while True:
             print(linha())
             resposta = menu(['Adição', 'Atualização','Deleção', 'Voltar'])
             if resposta == 1:
-                crud.adicionar(arq)
+                crud.adicionar(arq, index, data=, hora=)
             elif resposta == 2:
                 print()
             elif resposta == 3:
@@ -34,3 +34,4 @@ while True:
     else:
         print('\033[31mERRO: por favor, digite uma das opções.\033[m')
     sleep(2)
+

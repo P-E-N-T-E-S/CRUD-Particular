@@ -1,10 +1,10 @@
 import csv
-def adicionar(arq):
+def adicionar(arq, ordem, data, hora):
     with open(arq, "a") as arquivo:
             categoria = input("Digite a categoria da transação: ")
             valor = float(input("Digite o valor da transação: "))
             nome = input("Digite o nome da transação: ")
-            arquivo.write(f"\n{nome},{categoria},{valor}")
+            arquivo.write(f"\n{ordem},{nome},{categoria},{valor},{data},{hora}")
 
 def atualizar():
     memoria_csv = []
@@ -29,7 +29,6 @@ def atualizar():
         writer = csv.writer(arquivo, delimiter= ',')
         for i in memoria_csv:
             writer.writerow(i)
-
 
 def ler(arq):
     with open(arq, 'r') as arquivo:
