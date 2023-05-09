@@ -46,7 +46,6 @@ def atualizar(arq):
         arquivo_csv = csv.reader(arquivo)
         for linha in arquivo_csv:
             memoria_csv.append(linha)
-        print(memoria_csv)
     try:
         print('qual transação deseja alterar? (por index)')
         for c in memoria_csv:
@@ -77,3 +76,25 @@ def atualizar(arq):
             writer = csv.writer(arquivo, delimiter= ',')
             for i in memoria_csv:
                 writer.writerow(i)
+
+def deletar(arq):
+    memoria_csv = []
+    with open(arq, 'r',newline='', encoding='utf-8') as arquivo:
+        arquivo_csv = csv.reader(arquivo)
+        for linha in arquivo_csv:
+            memoria_csv.append(linha)
+        print('qual transação deseja deletar? (por index)')
+        for c in memoria_csv:
+            for a in range(len(c)):
+                print(c[a].ljust(9), end=' ')
+            print()
+        while True:
+            try:
+                escolha = int(input())
+            except ValueError():
+                    print('\33[31mPor favor insira um valor válido\31[m')
+            else:
+                break
+        for c in range(len(memoria_csv)):
+                if memoria_csv[c][0] == str(escolha):
+                    memoria_csv.pop(c)
