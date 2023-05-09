@@ -1,4 +1,3 @@
-import csv
 import os
 from Fpbiblioteca import * 
 from time import sleep
