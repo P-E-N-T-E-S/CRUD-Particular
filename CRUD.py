@@ -8,8 +8,6 @@ def ler_ultimo_index(arq):
             ultima_linha = linha
     return int(ultima_linha[0])
 
-
-
 def adicionar(arq, ordem, data, hora):
     with open(arq, "a") as arquivo:
             categoria = input("Digite a categoria da transação: ")
