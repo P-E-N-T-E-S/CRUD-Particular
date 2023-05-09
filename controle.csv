@@ -1,4 +1,4 @@
-['ordem', 'nome', 'categoria', 'valor', 'data', 'hora']
-['1', 'sorvete', 'lazer', '10.5']
-['2', 'encanamento', 'casa', '400.0']
-['3', 'salvavidas', 'casa', '500.0']
+ordem,nome,categoria,valor,data,hora
+1,a,a,1.0,09/05/2023,11:50:02
+2,b,b,2.0,09/05/2023,11:50:07
+3,c,c,3.0,09/05/2023,11:50:13
