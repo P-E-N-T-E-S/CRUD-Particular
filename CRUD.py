@@ -23,7 +23,7 @@ def adicionar(arq, ordem, data, hora):
         except KeyboardInterrupt():
             print('\33[32mVoltando ao Menu...\33[m')
         else:
-            arquivo.write(f"\n{ordem +1},{nome},{categoria},{valor},{data},{hora}")
+            arquivo.write(f"{ordem +1},{nome},{categoria},{valor},{data},{hora}")
 
 def ler(arq):
     with open(arq, 'r', encoding='utf-8') as arquivo:
@@ -59,16 +59,16 @@ def atualizar(arq):
                     print(memoria_csv[c])
                     novonome = input('digite o novo nome da transação: ')
                     novacat = input('digite a nova categoria: ')
-                    novovalor = float(input('digite o novo valor da transação '))
+                    memoria_csv[c][1] = novonome
+                    memoria_csv[c][2] = novacat
                     while True:
                         try:
-                            memoria_csv[c][1] = novonome
-                            memoria_csv[c][2] = novacat
-                            memoria_csv[c][3] = novovalor
-                        except ValueError():
+                            novovalor = float(input('digite o novo valor da transação '))
+                        except ValueError:
                             print('\33[31mPor favor insira um valor válido\31[m')
                         else:
                             break
+                    memoria_csv[c][3] = novovalor
                     print(memoria_csv[c])
     except KeyboardInterrupt():
         print('\33[32mVoltando ao Menu...\33[m')
