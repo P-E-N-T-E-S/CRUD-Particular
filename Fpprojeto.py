@@ -23,7 +23,7 @@ while True:
             elif resposta == 2:
                 crud.atualizar(arq)
             elif resposta == 3:
-                print()
+                crud.deletar(arq)
             elif resposta == 4:
                 print('\033[32mVoltando...\033[m')
                 break
