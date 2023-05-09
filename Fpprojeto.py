@@ -4,12 +4,16 @@ from time import sleep
 import CRUD as crud
 import criação_de_arquivo as ca
 import datetime as date
+
+
 os.system("cls")
 arq = ca.criararquivo()
+
 while True:
     os.system('cls')
     cabeçalho('MENU')
     resposta = menu(['Ler','Alterar','Encerrar'])
+    
     if resposta == 1:
         crud.ler(arq)
     elif resposta == 2:

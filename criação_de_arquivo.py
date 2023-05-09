@@ -8,6 +8,7 @@ def conferirarquivo():
         print('\33[31mArquivo não existente, criando arquivo...\33[m')
         existencia = False
     return(existencia)
+
 def criararquivo():
     existencia = conferirarquivo()
     nome = 'controle.csv'
