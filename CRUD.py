@@ -26,19 +26,22 @@ def adicionar(arq, ordem, data, hora):
             arquivo.write(f"{ordem +1},{nome},{categoria},{valor},{data},{hora}\n")
 
 def ler(arq):
-    with open(arq, 'r', encoding='utf-8') as arquivo:
+    try:
         memoria_csv = []
-        arquivo_csv = arquivo.readlines()
-        try:
+        with open(arq, 'r',newline='', encoding='utf-8') as arquivo:
+            arquivo_csv = arquivo.readlines()
             for linha in arquivo_csv:
                 memoria_csv.append(linha.split(','))
+            for a in memoria_csv:
+                for c in range(len(a)):
+                    a[c] = a[c].strip()
             for c in memoria_csv:
                 for a in range(len(c)):
-                    print(c[a], end=' ')
-                print('-'*54)
+                    print(c[a].ljust(12), end=' ')
+                print()
             input('digite enter para prosseguir')
-        except:
-            print('\33[31mErro inesperado, voltando ao menu\33[m')
+    except:
+        print('\33[31mErro inesperado, voltando ao menu\33[m')
 
 def atualizar(arq):
     memoria_csv = []
@@ -46,12 +49,14 @@ def atualizar(arq):
         arquivo_csv = arquivo.readlines()
         for linha in arquivo_csv:
             memoria_csv.append(linha.split(','))
+        for a in memoria_csv:
+                for c in range(len(a)):
+                    a[c] = a[c].strip()
     try:
         print('qual transação deseja alterar? (por index)')
         for c in memoria_csv:
-                for a in range(len(c)):
-                    print(c[a], end=' ')
-                print('-'*54)
+            for a in range(len(c)):
+                print(c[a].ljust(12), end=' ')
         escolha = input()
         for c in range(len(memoria_csv)):
                 if memoria_csv[c][0] == escolha:
@@ -87,11 +92,10 @@ def deletar(arq):
         for a in memoria_csv:
             for c in range(len(a)):
                 a[c] = a[c].strip()
-        print(memoria_csv)
         print('qual transação deseja deletar? (por index)')
         for c in memoria_csv:
             for a in range(len(c)):
-                print(c[a].ljust(9), end=' ')
+                print(c[a].ljust(12), end=' ')
             print()
         while True:
             try:
@@ -106,8 +110,11 @@ def deletar(arq):
     with open(arq, 'a', encoding='utf-8', newline='') as arquivo:
         reordem = 0
         for c in memoria_csv:
-            reordem += 1
-            c[0] = str(reordem)
-            a = ','.join(c)
-            arquivo.write(f'{c}\n')
+            if c[0] != 'ordem':
+                reordem += 1
+                c[0] = str(reordem)
+                a = ','.join(c)
+                arquivo.write(f'{a}\n')
+            else:
+                continue
     
