@@ -109,5 +109,5 @@ def deletar(arq):
             reordem += 1
             c[0] = str(reordem)
             a = ','.join(c)
-            arquivo.write(f'{c}\n')
+            arquivo.write(f'{a}\n')
     
