@@ -104,6 +104,10 @@ def deletar(arq):
     with open(arq, 'w', encoding='utf-8', newline='') as arquivo:
         arquivo.write('ordem,nome,categoria,valor,data,hora\n')
     with open(arq, 'a', encoding='utf-8', newline='') as arquivo:
+        reordem = 0
         for c in memoria_csv:
+            reordem += 1
+            c[0] = str(reordem)
+            a = ','.join(c)
             arquivo.write(f'{c}\n')
     
