@@ -8,22 +8,32 @@ def ler_ultimo_index(arq):
         else:
             return(0)
 
-def adicionar(arq, ordem, data, hora):
+def adicionar(arq, ordem, data, hora, categorias):
     with open(arq, "a", encoding='utf-8', newline='') as arquivo:
         try:
             nome = input("Digite o nome da transação: ")
             while True:
-                try:
-                    categoria = input("Digite a categoria da transação: ")
-                except ValueError():
-                    print('\33[31mPor favor insira um valor válido\31[m')
-                else:
+                categoria = input(f'''escolha a categoria da transação:
+        {categorias}
+        ou digite [categoria] para adicionar uma nova categoria: ''')
+                if categoria == 'categoria':
+                    novacat = input('digite a nova categoria: ')
+                    addcat = True
                     break
+                else:
+                    addcat = False
+                    if not categoria in categorias:
+                        print('\33[31mPor favor insira uma categoria válida!\33[m')
+                    else:
+                        break
             valor = float(input("Digite o valor da transação: "))
         except KeyboardInterrupt():
             print('\33[32mVoltando ao Menu...\33[m')
         else:
-            arquivo.write(f"{ordem +1},{nome},{categoria},{valor},{data},{hora}\n")
+            if addcat:
+                arquivo.write(f"{ordem +1},{nome},{novacat},{valor},{data},{hora}\n")
+            else:
+                arquivo.write(f"{ordem +1},{nome},{categoria},{valor},{data},{hora}\n")
 
 def ler(arq):
     try:
@@ -117,4 +127,16 @@ def deletar(arq):
                 arquivo.write(f'{a}\n')
             else:
                 continue
-    
+
+def acharcat():
+    categorias = []
+    with open('controle.csv', 'r', newline='', encoding='utf-8') as arquivo:
+        linhas = arquivo.readlines()
+        for linha in linhas:
+            valores = linha.split(',')
+            categorias.append(valores[2])
+        for a in range(len(categorias)):
+            for b in range(a+1, len(categorias)):
+                if categorias[a] == categorias[b]:
+                    del categorias[b]
+    return(categorias)
