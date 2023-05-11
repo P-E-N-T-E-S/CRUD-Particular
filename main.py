@@ -4,25 +4,25 @@ from time import sleep
 import CRUD as crud
 import criação_de_arquivo as ca
 import datetime as date
-
+cabeça = 'ordem,nome,categoria,valor,data,hora'
 
 os.system("cls")
 arq = ca.criararquivo()
-
 while True:
     os.system('cls')
+    categorias = crud.acharcat()
     cabeçalho('MENU')
     resposta = menu(['Ler','Alterar','Encerrar'])
-    
     if resposta == 1:
         crud.ler(arq)
     elif resposta == 2:
         while True:
             os.system("cls")
+            categorias = crud.acharcat()
             print(linha())
             resposta = menu(['Adição', 'Atualização','Deleção', 'Voltar'])
             if resposta == 1:
-                crud.adicionar(arq,ordem = crud.ler_ultimo_index(arq) ,data= date.datetime.now().strftime('%d/%m/%Y'), hora= date.datetime.now().strftime('%X'))
+                crud.adicionar(arq,ordem = crud.ler_ultimo_index(arq) ,data= date.datetime.now().strftime('%d/%m/%Y'), hora= date.datetime.now().strftime('%X'), categorias=categorias)
             elif resposta == 2:
                 crud.atualizar(arq)
             elif resposta == 3:
