@@ -1,8 +1,8 @@
 import os
-from Fpbiblioteca import * 
+from Formatacao.Fpbiblioteca import * 
 from time import sleep
-import CRUD as crud
-import criação_de_arquivo as ca
+import Manipulacao_de_arquivos.CRUD as crud
+import Manipulacao_de_arquivos.criação_de_arquivo as ca
 import datetime as date
 
 
@@ -10,8 +10,10 @@ os.system("cls")
 arq = ca.criararquivo()
 
 while True:
+    saldo = crud.ler_saldo_total(arq)
     os.system('cls')
     cabeçalho('MENU')
+    topicos([f'Saldo: R$ {saldo}'])
     resposta = menu(['Ler','Alterar','Encerrar'])
     
     if resposta == 1:

@@ -1,5 +1,5 @@
-import criação_de_arquivo as ca
-import csv
+import Manipulacao_de_arquivos.criação_de_arquivo as ca
+
 def deletar(arq):
     memoria_csv = []
     with open(arq, 'r',newline='', encoding='utf-8') as arquivo:

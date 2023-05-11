@@ -18,8 +18,11 @@ def adicionar(arq, ordem, data, hora):
                 except ValueError():
                     print('\33[31mPor favor insira um valor válido\31[m')
                 else:
-                    break
+                    break            
             valor = float(input("Digite o valor da transação: "))
+            sinal = input('Você gastou ou recebeu esse dinheiro?(s/sim/recebi)ou(n/não/gastei)')
+            if sinal.lower() in ['n','não', 'gastei']:
+                valor = valor * -1
         except KeyboardInterrupt():
             print('\33[32mVoltando ao Menu...\33[m')
         else:
@@ -59,6 +62,9 @@ def atualizar(arq):
                     novonome = input('digite o novo nome da transação: ')
                     novacat = input('digite a nova categoria: ')
                     novovalor = float(input('digite o novo valor da transação '))
+                    sinal = input('digite se foi um gasto ou ganho (s/sim/recebi)ou(n/não/gastei): ')
+                    if sinal.lower() in ['n','não', 'gastei']:
+                        novovalor = novovalor * -1
                     while True:
                         try:
                             memoria_csv[c][1] = novonome
@@ -107,3 +113,17 @@ def deletar(arq):
         for c in memoria_csv:
             arquivo.write(f'{c}\n')
     
+
+def ler_saldo_total(arq):
+    with open(arq, 'r', encoding='utf-8') as arquivo:
+        saldo = 0.0
+        arquivo_csv = arquivo.readlines()
+        arquivo_csv_dados = arquivo_csv[1:len(arquivo_csv)]
+        try:
+            for linha in arquivo_csv_dados:
+                print(linha.split(',')[3])
+                saldo += float(linha.split(',')[3])
+            return saldo
+        except:
+            return '\33[31mErro\33[m'
+        
