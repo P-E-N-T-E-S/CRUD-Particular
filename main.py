@@ -36,6 +36,6 @@ while True:
     elif resposta == 3:
         break
     else:
-        print('\033[31mERRO: por favor, digite uma das opções.\033[m')
-    sleep(2)
+        print('\033[31mInsira um número valído!\033[m')
+    sleep(1)
 
