@@ -26,14 +26,9 @@ def adicionar(arq, ordem, data, hora, categorias):
                         print('\33[31mPor favor insira uma categoria válida!\33[m')
                     else:
                         break
-            while True:
-                try:   
-                    valor = float(input("Digite o valor da transação: "))
-                    break
-                except(ValueError, KeyboardInterrupt):
-                    print('\n\33[32mInforme um valor valído!\33[m')
-        except (KeyboardInterrupt):
-            print('\n\33[32mVoltando ao Menu...\33[m')
+            valor = float(input("Digite o valor da transação: "))
+        except KeyboardInterrupt():
+            print('\33[32mVoltando ao Menu...\33[m')
         else:
             if addcat:
                 arquivo.write(f"{ordem +1},{nome},{novacat},{valor},{data},{hora}\n")
@@ -55,7 +50,7 @@ def ler(arq):
                     print(c[a].ljust(12), end=' ')
                 print()
             input('digite enter para prosseguir')
-    except (KeyboardInterrupt):
+    except:
         print('\33[31mErro inesperado, voltando ao menu\33[m')
 
 def atualizar(arq):
@@ -89,8 +84,8 @@ def atualizar(arq):
                             break
                     memoria_csv[c][3] = novovalor
                     print(memoria_csv[c])
-    except (KeyboardInterrupt):
-        print('\n\33[32mVoltando ao Menu...\33[m')
+    except KeyboardInterrupt():
+        print('\33[32mVoltando ao Menu...\33[m')
     else:
         with open(arq, 'w', encoding='utf-8') as arquivo:
             arquivo.write('ordem,nome,categoria,valor,data,hora\n')
@@ -100,44 +95,38 @@ def atualizar(arq):
 
 def deletar(arq):
     memoria_csv = []
-    while True:
-        try:
-            with open(arq, 'r',newline='', encoding='utf-8') as arquivo:
-                arquivo_csv = arquivo.readlines()
-                for linha in arquivo_csv:
-                    memoria_csv.append(linha.split(','))
-                for a in memoria_csv:
-                    for c in range(len(a)):
-                        a[c] = a[c].strip()
-                print('qual transação deseja deletar? (por index)')
-                for c in memoria_csv:
-                    for a in range(len(c)):
-                        print(c[a].ljust(12), end=' ')
-                    print()
-                while True:
-                    try:
-                        escolha = int(input())
-                    except (ValueError):
-                            print('\33[31mPor favor insira um valor válido\31[m')
-                    else:
-                        break
-                memoria_csv.pop(escolha+1)
-            with open(arq, 'w', encoding='utf-8', newline='') as arquivo:
-                arquivo.write('ordem,nome,categoria,valor,data,hora\n')
-            with open(arq, 'a', encoding='utf-8', newline='') as arquivo:
-                reordem = 0
-                for c in memoria_csv:
-                    if c[0] != 'ordem':
-                        reordem += 1
-                        c[0] = str(reordem)
-                        a = ','.join(c)
-                        arquivo.write(f'{a}\n')
-                    else:
-                        continue
-        except (KeyboardInterrupt):
-            print('\n\33[32mVoltando ao Menu...\33[m')
-            break
-
+    with open(arq, 'r',newline='', encoding='utf-8') as arquivo:
+        arquivo_csv = arquivo.readlines()
+        for linha in arquivo_csv:
+            memoria_csv.append(linha.split(','))
+        for a in memoria_csv:
+            for c in range(len(a)):
+                a[c] = a[c].strip()
+        print('qual transação deseja deletar? (por index)')
+        for c in memoria_csv:
+            for a in range(len(c)):
+                print(c[a].ljust(12), end=' ')
+            print()
+        while True:
+            try:
+                escolha = int(input())
+            except ValueError():
+                    print('\33[31mPor favor insira um valor válido\31[m')
+            else:
+                break
+        memoria_csv.pop(escolha+1)
+    with open(arq, 'w', encoding='utf-8', newline='') as arquivo:
+        arquivo.write('ordem,nome,categoria,valor,data,hora\n')
+    with open(arq, 'a', encoding='utf-8', newline='') as arquivo:
+        reordem = 0
+        for c in memoria_csv:
+            if c[0] != 'ordem':
+                reordem += 1
+                c[0] = str(reordem)
+                a = ','.join(c)
+                arquivo.write(f'{a}\n')
+            else:
+                continue
 
 def acharcat():
     categorias = []
@@ -150,4 +139,5 @@ def acharcat():
             for b in range(a+1, len(categorias)):
                 if categorias[a] == categorias[b]:
                     del categorias[b]
+    del categorias[0]
     return(categorias)
