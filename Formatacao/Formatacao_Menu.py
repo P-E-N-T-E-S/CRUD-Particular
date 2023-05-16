@@ -21,6 +21,12 @@ def cabeçalho(txt):
     print(txt.center(42))
     print(linha())
 
+def topicos(topicos):
+    print()
+    for topico in topicos:
+        print(topico.ljust(42))
+    print(linha())
+
 def menu(list):
     '''Informe valores em forma de lista; essa função transforma a lista em formato de menu'''
     c = 1

@@ -8,50 +8,40 @@ def ler_ultimo_index(arq):
         else:
             return(0)
 
-def adicionar(arq, ordem, data, hora, categorias):
+def adicionar(arq, ordem, data, hora):
     with open(arq, "a", encoding='utf-8', newline='') as arquivo:
         try:
             nome = input("Digite o nome da transação: ")
             while True:
-                categoria = input(f'''escolha a categoria da transação:
-        {categorias}
-        ou digite [categoria] para adicionar uma nova categoria: ''')
-                if categoria == 'categoria':
-                    novacat = input('digite a nova categoria: ')
-                    addcat = True
-                    break
+                try:
+                    categoria = input("Digite a categoria da transação: ")
+                except ValueError():
+                    print('\33[31mPor favor insira um valor válido\31[m')
                 else:
-                    addcat = False
-                    if not categoria in categorias:
-                        print('\33[31mPor favor insira uma categoria válida!\33[m')
-                    else:
-                        break
+                    break            
             valor = float(input("Digite o valor da transação: "))
+            sinal = input('Você gastou ou recebeu esse dinheiro?(s/sim/recebi)ou(n/não/gastei)')
+            if sinal.lower() in ['n','não', 'gastei']:
+                valor = valor * -1
         except KeyboardInterrupt():
             print('\33[32mVoltando ao Menu...\33[m')
         else:
-            if addcat:
-                arquivo.write(f"{ordem +1},{nome},{novacat},{valor},{data},{hora}\n")
-            else:
-                arquivo.write(f"{ordem +1},{nome},{categoria},{valor},{data},{hora}\n")
+            arquivo.write(f"{ordem +1},{nome},{categoria},{valor},{data},{hora}\n")
 
 def ler(arq):
-    try:
+    with open(arq, 'r', encoding='utf-8') as arquivo:
         memoria_csv = []
-        with open(arq, 'r',newline='', encoding='utf-8') as arquivo:
-            arquivo_csv = arquivo.readlines()
+        arquivo_csv = arquivo.readlines()
+        try:
             for linha in arquivo_csv:
                 memoria_csv.append(linha.split(','))
-            for a in memoria_csv:
-                for c in range(len(a)):
-                    a[c] = a[c].strip()
             for c in memoria_csv:
                 for a in range(len(c)):
-                    print(c[a].ljust(12), end=' ')
-                print()
+                    print(c[a], end=' ')
+                print('-'*54)
             input('digite enter para prosseguir')
-    except:
-        print('\33[31mErro inesperado, voltando ao menu\33[m')
+        except:
+            print('\33[31mErro inesperado, voltando ao menu\33[m')
 
 def atualizar(arq):
     memoria_csv = []
@@ -59,30 +49,31 @@ def atualizar(arq):
         arquivo_csv = arquivo.readlines()
         for linha in arquivo_csv:
             memoria_csv.append(linha.split(','))
-        for a in memoria_csv:
-                for c in range(len(a)):
-                    a[c] = a[c].strip()
     try:
         print('qual transação deseja alterar? (por index)')
         for c in memoria_csv:
-            for a in range(len(c)):
-                print(c[a].ljust(12), end=' ')
+                for a in range(len(c)):
+                    print(c[a], end=' ')
+                print('-'*54)
         escolha = input()
         for c in range(len(memoria_csv)):
                 if memoria_csv[c][0] == escolha:
                     print(memoria_csv[c])
                     novonome = input('digite o novo nome da transação: ')
                     novacat = input('digite a nova categoria: ')
-                    memoria_csv[c][1] = novonome
-                    memoria_csv[c][2] = novacat
+                    novovalor = float(input('digite o novo valor da transação '))
+                    sinal = input('digite se foi um gasto ou ganho (s/sim/recebi)ou(n/não/gastei): ')
+                    if sinal.lower() in ['n','não', 'gastei']:
+                        novovalor = novovalor * -1
                     while True:
                         try:
-                            novovalor = float(input('digite o novo valor da transação '))
-                        except ValueError:
+                            memoria_csv[c][1] = novonome
+                            memoria_csv[c][2] = novacat
+                            memoria_csv[c][3] = novovalor
+                        except ValueError():
                             print('\33[31mPor favor insira um valor válido\31[m')
                         else:
                             break
-                    memoria_csv[c][3] = novovalor
                     print(memoria_csv[c])
     except KeyboardInterrupt():
         print('\33[32mVoltando ao Menu...\33[m')
@@ -102,10 +93,11 @@ def deletar(arq):
         for a in memoria_csv:
             for c in range(len(a)):
                 a[c] = a[c].strip()
+        print(memoria_csv)
         print('qual transação deseja deletar? (por index)')
         for c in memoria_csv:
             for a in range(len(c)):
-                print(c[a].ljust(12), end=' ')
+                print(c[a].ljust(9), end=' ')
             print()
         while True:
             try:
@@ -118,26 +110,20 @@ def deletar(arq):
     with open(arq, 'w', encoding='utf-8', newline='') as arquivo:
         arquivo.write('ordem,nome,categoria,valor,data,hora\n')
     with open(arq, 'a', encoding='utf-8', newline='') as arquivo:
-        reordem = 0
         for c in memoria_csv:
-            if c[0] != 'ordem':
-                reordem += 1
-                c[0] = str(reordem)
-                a = ','.join(c)
-                arquivo.write(f'{a}\n')
-            else:
-                continue
+            arquivo.write(f'{c}\n')
+    
 
-def acharcat():
-    categorias = []
-    with open('controle.csv', 'r', newline='', encoding='utf-8') as arquivo:
-        linhas = arquivo.readlines()
-        for linha in linhas:
-            valores = linha.split(',')
-            categorias.append(valores[2])
-        for a in range(len(categorias)):
-            for b in range(a+1, len(categorias)):
-                if categorias[a] == categorias[b]:
-                    del categorias[b]
-    del categorias[0]
-    return(categorias)
+def ler_saldo_total(arq):
+    with open(arq, 'r', encoding='utf-8') as arquivo:
+        saldo = 0.0
+        arquivo_csv = arquivo.readlines()
+        arquivo_csv_dados = arquivo_csv[1:len(arquivo_csv)]
+        try:
+            for linha in arquivo_csv_dados:
+                print(linha.split(',')[3])
+                saldo += float(linha.split(',')[3])
+            return saldo
+        except:
+            return '\33[31mErro\33[m'
+        
