@@ -1,5 +1,6 @@
 def leiaInt(msg):
-    '''Essa função é usada para tratamento de erro; assim a opção selecionado só será aceita se for dentro das opções'''
+    '''essa função recebe como parametro uma mensagem a ser colocada no terminal, e vai pedir um numero como
+    input, verifica se o input foi numero, se não for aparece uma mensagem de erro e pede novamente'''
     while True:
         try:
             n = int(input(msg))
@@ -12,7 +13,7 @@ def leiaInt(msg):
             return n
 
 def linha(tam = 42):
-    '''Coloca algumas linhas'''
+    '''Função responsável por printar linhas, para embelezamento dos menus.'''
     return "-" * tam
 
 def cabeçalho(txt):
@@ -22,6 +23,7 @@ def cabeçalho(txt):
     print(linha())
 
 def topicos(topicos):
+    '''essa função recebe o input como lista e apresenta essa lista em formato de tópicos'''
     print()
     for topico in topicos:
         print(topico.ljust(42))

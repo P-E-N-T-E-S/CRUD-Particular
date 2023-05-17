@@ -17,7 +17,16 @@ while True:
     resposta = menu(['Ler','Alterar','Encerrar'])
     
     if resposta == 1:
-        crud.ler(arq)
+        while True:
+            os.system('cls')
+            print(linha())
+            resposta2 = menu(['Mostrar tudo', 'Mostrar por categoria', 'Voltar'])
+            if resposta2 == 1:
+                crud.ler(arq)
+            elif resposta2 == 2:
+                crud.mostrarcat(arq)
+            elif resposta2 == 3:
+                break
     elif resposta == 2:
         while True:
             os.system("cls")
@@ -40,4 +49,3 @@ while True:
     else:
         print('\033[31mERRO: por favor, digite uma das opções.\033[m')
     sleep(2)
-
