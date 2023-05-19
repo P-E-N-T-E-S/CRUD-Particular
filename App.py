@@ -48,4 +48,4 @@ while True:
         break
     else:
         print('\033[31mERRO: por favor, digite uma das opções.\033[m')
-    sleep(2)
+    #sleep(2)

@@ -14,7 +14,7 @@ def criararquivo():
     nome = 'controle.csv'
     if not existencia:
         with open(nome, 'w') as arquivo:
-            arquivo.write('ordem,nome,categoria,valor,data,hora\n')
+            arquivo.write('Ordem,Nome,Categoria,Valor,Data,Hora\n')
         print('\33[32mArquivo controle.csv criado, com sucesso\33[m')
     else:
         print('Encontrado arquivo controle.csv')
