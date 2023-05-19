@@ -1,19 +1,3 @@
-def ler_saldo_total(arq):
-    '''essa função recebe como parâmetro o caminho do arquivo e ela analisa toda a coluna 5 para
-    calcular todos os ganhos e perdas nas transações e retorna como valor float o balanço geral'''
-    try:
-        with open(arq, 'r', encoding='utf-8') as arquivo:
-            saldo = 0.0
-            arquivo_csv = arquivo.readlines()
-            arquivo_csv_dados = arquivo_csv[1:len(arquivo_csv)]
-            try:
-                for linha in arquivo_csv_dados:
-                    saldo += float(linha.split(',')[3])
-                return(saldo)
-            except:
-                return('\33[31mErro\33[m')
-    except:
-        print('\33[31mErro inesperado, reinicie o programa ou contate os devs\33[m')
 def acharcat(arq):
     '''essa função recebe como parâmetro o caminho do arquivo
     que ela vai procurar no index 2 que está registrados as 
@@ -27,7 +11,7 @@ def acharcat(arq):
                 valores = linha.split(',')
                 categorias.append(valores[2])
             categorias = list(set(categorias))
-            categorias.remove('categoria')
+            categorias.remove('Categoria')
             return(categorias)
     except:
         print('\33[31mErro inesperado, reinicie o programa ou contate os devs\33[m')
@@ -36,17 +20,17 @@ def ler_ultimo_index(arq):
     '''essa função recebe como parametro o caminho do arquivo em que
     ela vai procurar no index 0 o numero da ultima transação e retorna ele
     caso não haja transação ele retorna 0'''
-    try:
-        with open(arq,'r') as arquivo:
-            mensagem = arquivo.readlines()
-            if len(mensagem) > 1:
-                for linha in mensagem:
-                    ultima_linha = linha.split(',')
-                return (int(ultima_linha[0]))
-            else:
-                return(0)
-    except:
-        print('\33[31mErro inesperado, reinicie o programa ou contate os devs\33[m')
+    #try:
+    with open(arq,'r') as arquivo:
+        mensagem = arquivo.readlines()
+        if len(mensagem) > 1:
+            for linha in mensagem:
+                ultima_linha = linha.split(',')
+            return (int(ultima_linha[0]))
+        else:
+            return(0)
+    #except:
+     #   print('\33[31mErro inesperado, reinicie o programa ou contate os devs\33[m')
 
 
 def adicionar(arq, ordem, data, hora):
@@ -62,13 +46,14 @@ def adicionar(arq, ordem, data, hora):
     entre: {categorias}
     ou digite [categoria] para adicionar uma nova categoria: ''')
                 if categoria == 'categoria':
-                    categoria = input('digite a nova categoria: ').capitalize()
+                    categoria = input('digite a nova categoria: ').title()
                     break
                 else:
                     if categoria in categorias:
                         break
                     else:
                         print('\33[31mInsira uma categoria válida\33[m')
+                        os.system('cls')
                         continue
             while True:
                 try:
@@ -77,15 +62,20 @@ def adicionar(arq, ordem, data, hora):
                     print('\33[31mPor favor insira um valor válido\33[m')
                 else:
                     break
-            situacao = input('Você gastou ou recebeu esse dinheiro?[Recebi/Gastei]: ')
+            situacao = input('Você gastou ou recebeu esse dinheiro?[Recebi] ou [Gastei]: ')
             if situacao.lower() in ['gastei']:
                 valor = valor * -1
-                print(f"A nova transação será: {ordem +1},{nome},{categoria},{valor}0,{data},{hora}")
-                cancelamento = input('Digite [enter] para prosseguir ou [cancelar] para não registrar: ').lower()
+            print(f"a nova transação será: {ordem +1},{nome},{categoria},{valor}0,{data},{hora}")
+            while True:
+                cancelamento = input('digite [ok] para prosseguir ou [cancelar] para não registrar: ').lower()
+                if cancelamento not in ['ok' , 'cancelar']:
+                    print('\33[31mDigite uma resposta válida\33[m')
+                else:
+                    break
         except (KeyboardInterrupt):
             print('\33[32mVoltando ao Menu...\33[m')
         else:
-            if cancelamento != 'cancelar':
+            if cancelamento == 'ok':
                 arquivo.write(f"{ordem +1},{nome},{categoria},{valor}0,{data},{hora}\n")
             else:
                 print('\33[32mVoltando ao Menu...\33[m')
@@ -101,16 +91,16 @@ def ler(arq):
             for linha in arquivo_csv:
                 memoria_csv.append(linha.split(','))
             for linha in memoria_csv:
-                for palavra in range(len(linha)):
-                    linha[palavra] = linha[palavra].strip()
-            for linha in memoria_csv:
-                for palavra in range(len(linha)):
-                    if palavra == 3 and linha[palavra] != "Valor":
-                        print(f'R${linha[palavra]}', end=' ')
+                for palavra in range(len(a)):
+                    linha[palavra] = palavra[c].strip()
+            for c in memoria_csv:
+                for a in range(len(c)):
+                    if a == 3 and c != 0:
+                        print(f'R${c[a]}', end=' ')
                     else:
-                        print(linha[palavra].ljust(14), end=' ')
+                        print(c[a].ljust(12), end=' ')
                 print()
-            input('Digite enter para prosseguir!')
+            input('digite enter para prosseguir')
     except:
         print('\33[31mErro inesperado, voltando ao menu\33[m')
 
@@ -128,7 +118,7 @@ def atualizar(arq):
         print('qual transação deseja alterar? (por index)')
         for linha in memoria_csv:
             for palavra in range(len(linha)):
-                linha[palavra] = linha[palavra].strip()
+                linha[c] = linha[c].strip()
         for linha in memoria_csv:
             for palavra in range(len(linha)):
                 if palavra == 3 and linha != 0:
@@ -137,9 +127,9 @@ def atualizar(arq):
                     print(linha[palavra].ljust(12), end=' ')
             print()
         escolha = input('   -->')
-        for c in range(len(memoria_csv)):
-                if memoria_csv[c][0] == escolha:
-                    print(f'{memoria_csv[c][0]} - {memoria_csv[c][1]}, {memoria_csv[c][2]}, {memoria_csv[c][3]}, {memoria_csv[c][4]}, {memoria_csv[c][5]}')
+        for linha in range(len(memoria_csv)):
+                if memoria_csv[linha][0] == escolha:
+                    print(f'{memoria_csv[linha][0]} - {memoria_csv[linha][1]}, {memoria_csv[linha][2]}, {memoria_csv[linha][3]}, {memoria_csv[linha][4]}, {memoria_csv[linha][5]}')
                     novonome = input('digite o novo nome da transação: ')
                     while True:
                         novacat = input(f'''escolha a categoria da transação:{categorias}
@@ -161,14 +151,14 @@ def atualizar(arq):
                         novovalor = novovalor * -1
                     while True:
                         try:
-                            memoria_csv[c][1] = novonome
-                            memoria_csv[c][2] = novacat
-                            memoria_csv[c][3] = f'{novovalor}0'
+                            memoria_csv[linha][1] = novonome
+                            memoria_csv[linha][2] = novacat
+                            memoria_csv[linha][3] = f'{novovalor}0'
                         except ValueError():
                             print('\33[31mPor favor insira um valor válido\31[m')
                         else:
                             break
-                    print(f'a transação ficou: {memoria_csv[c][0]} - {memoria_csv[c][1]}, {memoria_csv[c][2]}, {memoria_csv[c][3]}, {memoria_csv[c][4]}, {memoria_csv[c][5]}')
+                    print(f'a transação ficou: {memoria_csv[linha][0]} - {memoria_csv[linha][1]}, {memoria_csv[linha][2]}, {memoria_csv[linha][3]}, {memoria_csv[linha][4]}, {memoria_csv[linha][5]}')
                     prosseguir = input('para confirmar pressione [enter] ou insira [cancelar] para cancelar: ').upper()
     except:
         print('\33[32mVoltando ao Menu...\33[m')
@@ -177,8 +167,8 @@ def atualizar(arq):
             with open(arq, 'w', encoding='utf-8') as arquivo:
                 arquivo.write('ordem,nome,categoria,valor,data,hora\n')
             with open(arq, 'a', encoding='utf-8') as arquivo:
-                for c in range(1, len(memoria_csv)):
-                    arquivo.write(f'{memoria_csv[c][0]},{memoria_csv[c][1]},{memoria_csv[c][2]},{memoria_csv[c][3]},{memoria_csv[c][4]},{memoria_csv[c][5].strip()}\n')
+                for linha in range(1, len(memoria_csv)):
+                    arquivo.write(f'{memoria_csv[linha][0]},{memoria_csv[linha][1]},{memoria_csv[linha][2]},{memoria_csv[linha][3]},{memoria_csv[linha][4]},{memoria_csv[linha][5].strip()}\n')
                     print('\33[31mTransação atualizada!\33[m')
         else:
             print( '\33[31mCancelando operação... \33[m')
@@ -220,7 +210,24 @@ def deletar(arq):
                 arquivo.write(f'{linhaformat}\n')
             else:
                 continue
-                       
+    
+def ler_saldo_total(arq):
+    '''essa função recebe como parâmetro o caminho do arquivo e ela analisa toda a coluna 5 para
+    calcular todos os ganhos e perdas nas transações e retorna como valor float o balanço geral'''
+    try:
+        with open(arq, 'r', encoding='utf-8') as arquivo:
+            saldo = 0.0
+            arquivo_csv = arquivo.readlines()
+            arquivo_csv_dados = arquivo_csv[1:len(arquivo_csv)]
+            try:
+                for linha in arquivo_csv_dados:
+                    saldo += float(linha.split(',')[3][2:8])
+                return(saldo)
+            except:
+                return('\33[31mErro\33[m')
+    except:
+        print('\33[31mErro inesperado, reinicie o programa ou contate os devs\33[m')
+        
 def mostrarcat(arq):
     '''essa função recebe como função o caminho do arquivo e pede como input uma categoria a ser mostrada
     então ela mostra o arquivo com formatação de tabela filtrando para aparecer apenas as transações da
@@ -232,7 +239,7 @@ def mostrarcat(arq):
             try:
                 escolha = input(f"""Qual categoria você deseja vizualizar? 
             entre: {categorias}
-            --> """).capitalize()
+            --> """).lower()
                 if escolha in categorias:
                     for l in lista_csv:
                         l = l.split(',')
