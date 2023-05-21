@@ -32,11 +32,11 @@ def ler_ultimo_index(arq):
     #except:
      #   print('\33[31mErro inesperado, reinicie o programa ou contate os devs\33[m')
 
-
 def adicionar(arq, ordem, data, hora):
     '''essa função recebe como parametros o caminho do arquivo, a posição
     da ultima transação a data e a hora local e vai receber inputs do
     usuario para criar uma nova transação e registrar ela no arquivo'''
+    import os
     with open(arq, "a", encoding='utf-8', newline='') as arquivo:
         categorias = acharcat(arq)
         try:
@@ -84,25 +84,25 @@ def ler(arq):
     '''essa função recebe como parâmetro o nome do arquivo csv em que ela vai mostrar no terminal
     linha a linha formatado como tabela, quando chega no index 5 ela coloca um R$ na frente, para
     terminar a função ela espera um enter'''
-    try:
-        memoria_csv = []
-        with open(arq, 'r',newline='', encoding='utf-8') as arquivo:
+    #try:
+    memoria_csv = []
+    with open(arq, 'r',newline='', encoding='utf-8') as arquivo:
             arquivo_csv = arquivo.readlines()
             for linha in arquivo_csv:
                 memoria_csv.append(linha.split(','))
             for linha in memoria_csv:
-                for palavra in range(len(a)):
-                    linha[palavra] = palavra[c].strip()
-            for c in memoria_csv:
-                for a in range(len(c)):
-                    if a == 3 and c != 0:
-                        print(f'R${c[a]}', end=' ')
+                for palavra in range(len(linha)):
+                    linha[palavra] = linha[palavra].strip()
+            for linha in memoria_csv:
+                for palavra in range(len(linha)):
+                    if palavra == 3 and linha != 0:
+                        print(f'R${linha[palavra]}', end=' ')
                     else:
-                        print(c[a].ljust(12), end=' ')
+                        print(linha[palavra].ljust(12), end=' ')
                 print()
             input('digite enter para prosseguir')
-    except:
-        print('\33[31mErro inesperado, voltando ao menu\33[m')
+    #except:
+        #print('\33[31mErro inesperado, voltando ao menu\33[m')
 
 def atualizar(arq):
     '''essa função recebe como parâmetro o nome do arquivo e mostra todo o arquivo em formato de tabela, assim
@@ -161,7 +161,7 @@ def atualizar(arq):
                     print(f'a transação ficou: {memoria_csv[linha][0]} - {memoria_csv[linha][1]}, {memoria_csv[linha][2]}, {memoria_csv[linha][3]}, {memoria_csv[linha][4]}, {memoria_csv[linha][5]}')
                     prosseguir = input('para confirmar pressione [enter] ou insira [cancelar] para cancelar: ').upper()
     except:
-        print('\33[32mVoltando ao Menu...\33[m')
+        print('\33[31mVoltando ao Menu...\33[m')
     else:
         if prosseguir != 'cancelar':
             with open(arq, 'w', encoding='utf-8') as arquivo:
@@ -177,56 +177,59 @@ def deletar(arq):
     '''essa função recebe como parâmetro o caminho do arquivo, ela vai mostrar todas as linhas do arquivo
     em formatação de tabela e vai perguntar qual transação deve ser deletada por index, após isso reescreeve
     o arquivo sem a transação escolhida e refazendo o index'''
-    memoria_csv = []
-    with open(arq, 'r',newline='', encoding='utf-8') as arquivo:
-        arquivo_csv = arquivo.readlines()
-        for linha in arquivo_csv:
-            memoria_csv.append(linha.split(','))
-        for linha in memoria_csv:
-            for palavra in range(len(linha)):
-                linha[palavra] = linha[palavra].strip()
-        print('qual transação deseja deletar? (por index)')
-        for linha in memoria_csv:
-            for palavra in range(len(linha)):
-                print(linha[palavra].ljust(12), end=' ')
-            print()
-        while True:
-            try:
-                escolha = int(input())
-            except(ValueError):
-                    print('\33[31mPor favor insira um valor válido\31[m')
-            else:
-                break
-        memoria_csv.pop(escolha)
-    with open(arq, 'w', encoding='utf-8', newline='') as arquivo:
-        arquivo.write('ordem,nome,categoria,valor,data,hora\n')
-    with open(arq, 'a', encoding='utf-8', newline='') as arquivo:
-        novaordem = 0
-        for linha in memoria_csv:
-            if linha[0] != 'ordem':
-                novaordem += 1
-                linha[0] = str(novaordem)
-                linhaformat = ','.join(linha)
-                arquivo.write(f'{linhaformat}\n')
-            else:
-                continue
-    
-def ler_saldo_total(arq):
-    '''essa função recebe como parâmetro o caminho do arquivo e ela analisa toda a coluna 5 para
-    calcular todos os ganhos e perdas nas transações e retorna como valor float o balanço geral'''
     try:
-        with open(arq, 'r', encoding='utf-8') as arquivo:
-            saldo = 0.0
+        memoria_csv = []
+        with open(arq, 'r',newline='', encoding='utf-8') as arquivo:
             arquivo_csv = arquivo.readlines()
-            arquivo_csv_dados = arquivo_csv[1:len(arquivo_csv)]
-            try:
-                for linha in arquivo_csv_dados:
-                    saldo += float(linha.split(',')[3][2:8])
-                return(saldo)
-            except:
-                return('\33[31mErro\33[m')
-    except:
-        print('\33[31mErro inesperado, reinicie o programa ou contate os devs\33[m')
+            for linha in arquivo_csv:
+                memoria_csv.append(linha.split(','))
+            for linha in memoria_csv:
+                for palavra in range(len(linha)):
+                    linha[palavra] = linha[palavra].strip()
+            print('qual transação deseja deletar? (por index)')
+            for linha in memoria_csv:
+                for palavra in range(len(linha)):
+                    print(linha[palavra].ljust(12), end=' ')
+                print()
+            while True:
+                try:
+                    escolha = int(input())
+                except(ValueError):
+                        print('\33[31mPor favor insira um valor válido\33[m')
+                else:
+                    break
+            memoria_csv.pop(escolha)
+        with open(arq, 'w', encoding='utf-8', newline='') as arquivo:
+            arquivo.write('ordem,nome,categoria,valor,data,hora\n')
+        with open(arq, 'a', encoding='utf-8', newline='') as arquivo:
+            novaordem = 0
+            for linha in memoria_csv:
+                if linha[0] != 'ordem':
+                    novaordem += 1
+                    linha[0] = str(novaordem)
+                    linhaformat = ','.join(linha)
+                    arquivo.write(f'{linhaformat}\n')
+                else:
+                    continue
+        
+    def ler_saldo_total(arq):
+        '''essa função recebe como parâmetro o caminho do arquivo e ela analisa toda a coluna 5 para
+        calcular todos os ganhos e perdas nas transações e retorna como valor float o balanço geral'''
+        try:
+            with open(arq, 'r', encoding='utf-8') as arquivo:
+                saldo = 0.0
+                arquivo_csv = arquivo.readlines()
+                arquivo_csv_dados = arquivo_csv[1:len(arquivo_csv)]
+                try:
+                    for linha in arquivo_csv_dados:
+                        saldo += float(linha.split(',')[3])
+                    return(saldo)
+                except:
+                    return('\33[31mErro\33[m')
+        except:
+            print('\33[31mErro inesperado, reinicie o programa ou contate os devs\33[m')
+    except(KeyboardInterrupt):
+        print('\33[31mVoltando ao menu\33[m')
         
 def mostrarcat(arq):
     '''essa função recebe como função o caminho do arquivo e pede como input uma categoria a ser mostrada

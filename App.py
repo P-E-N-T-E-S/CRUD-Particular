@@ -23,10 +23,13 @@ while True:
             resposta2 = menu(['Mostrar tudo', 'Mostrar por categoria', 'Voltar'])
             if resposta2 == 1:
                 crud.ler(arq)
+                sleep(2)
             elif resposta2 == 2:
                 crud.mostrarcat(arq)
+                sleep(2)
             elif resposta2 == 3:
                 break
+            sleep(2)
     elif resposta == 2:
         while True:
             os.system("cls")
