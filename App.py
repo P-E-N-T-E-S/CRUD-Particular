@@ -11,6 +11,7 @@ arq = ca.criararquivo()
 
 while True:
     saldo = crud.ler_saldo_total(arq)
+    sleep(1)
     os.system('cls')
     cabeçalho('MENU')
     topicos([f'Saldo: R$ {saldo}'])
@@ -23,13 +24,13 @@ while True:
             resposta2 = menu(['Mostrar tudo', 'Mostrar por categoria', 'Voltar'])
             if resposta2 == 1:
                 crud.ler(arq)
-                sleep(2)
+                sleep(1)
             elif resposta2 == 2:
                 crud.mostrarcat(arq)
-                sleep(2)
+                sleep(1)
             elif resposta2 == 3:
                 break
-            sleep(2)
+            sleep(1)
     elif resposta == 2:
         while True:
             os.system("cls")
@@ -46,7 +47,7 @@ while True:
                 break
             else:
                 print('\033[31mERRO: por favor, digite uma das opções.\033[m')
-            sleep(2)
+            sleep(1)
     elif resposta == 3:
         break
     else:
