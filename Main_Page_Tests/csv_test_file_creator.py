@@ -13,5 +13,6 @@ if not(os.path.exists(nome_do_arquivo_de_teste)):
                     '6,argamassa,casa,150.0,09/05/2023,09:46:19\n'
                     ]
         arquivo_de_teste.writelines(memoria_csv)
+        print('\33[32mArquivo de salvamento  controle.csv criado, com sucesso\33[m')
 else: 
     print('Controle já existe')
