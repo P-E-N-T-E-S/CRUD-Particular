@@ -3,9 +3,12 @@ from time import sleep
 import datetime as date
 
 from Formatacao.Formatacao_Menu import * 
-import Manipulacao_de_arquivos.CRUD as crud
 import Manipulacao_de_arquivos.criação_de_arquivo as ca
-import Manipulacao_de_arquivos.vizualizador_de_dados as leitor
+
+import CRUD.leitor_de_dados as leitor
+import CRUD.adicionador_de_dados as escritor
+import CRUD.atualizador_de_dados as atualizador
+import CRUD.deletador_de_dados as deletador
 
 
 os.system("cls")
@@ -39,11 +42,11 @@ while True:
             print(linha())
             resposta = menu(['Adição', 'Atualização','Deleção', 'Voltar'])
             if resposta == 1:
-                crud.adicionar(arq,ordem = leitor.ler_ultimo_index(arq) ,data= date.datetime.now().strftime('%d/%m/%Y'), hora= date.datetime.now().strftime('%X'))
+                escritor.adicionar(arq,ordem = leitor.ler_ultimo_index(arq) ,data= date.datetime.now().strftime('%d/%m/%Y'), hora= date.datetime.now().strftime('%X'))
             elif resposta == 2:
-                crud.atualizar(arq)
+                atualizador.atualizar(arq)
             elif resposta == 3:
-                crud.deletar(arq)
+                deletador.deletar(arq)
             elif resposta == 4:
                 print('\033[32mVoltando...\033[m')
                 break

@@ -159,3 +159,4 @@ cython_debug/
 
 #Testing types:
 *.csv
+__pycache__/

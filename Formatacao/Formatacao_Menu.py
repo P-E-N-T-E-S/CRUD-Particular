@@ -24,6 +24,33 @@ def leiaInt(msg):
             return 0
         else:
             return num
+        
+def leiaFloat(msg):
+    '''Recebe como parametro uma mensagem a ser colocada no terminal, e pede um numero como input,
+    verifica se o input pode ser convertido para float, se não for mostra uma mensagem de erro e pede novamente.
+
+        Parameters:
+            msg(str):mensagem que será mostrada no terminal.
+        
+        Raises:
+            ValueError,TypeError:se a função receber algo não convertivel para int.
+            KeyboardInterrupt:se o programa for interrompido pelo usuário.
+               
+        Returns:
+           (float):em caso de nenhuma escolha retorna 0.\n
+           (float):se a operação ocorreu com sucesso retona o numero esperado.
+        
+    '''
+    while True:
+        try:
+            num = float(input(msg))
+        except (ValueError, TypeError):
+            print('\033[31mERRO: por favor, digite um número válido.\033[m')
+        except (KeyboardInterrupt):
+            print('\n\033[31mUsuário preferiu não digitar um número.\033[m')
+            return 0
+        else:
+            return num
 
 def linha(tamanho = 42):
     '''Função responsável por printar linhas, para formatação dos menus.

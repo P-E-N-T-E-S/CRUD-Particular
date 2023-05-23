@@ -1,3 +1,5 @@
+from Manipulacao_de_arquivos import manipulador_de_csv
+
 def ler(arq):
     '''Recebe como parametro o nome do arquivo csv de banco de dados em que mostrara no terminal linha a linha
     formatado como tabela. Tendo formatações especiais dependendo do valor de cada posição, como nas posições
@@ -7,21 +9,15 @@ def ler(arq):
             arq(str):nome do arquivo csv de banco de dados.
     '''    
     memoria_csv = []
-    with open(arq, 'r',newline='', encoding='utf-8') as arquivo:
-            arquivo_csv = arquivo.readlines()
-            for linha in arquivo_csv:
-                memoria_csv.append(linha.split(','))
-            for linha in memoria_csv:
-                for palavra in range(len(linha)):
-                    linha[palavra] = linha[palavra].strip()
-            for linha in memoria_csv:
-                for palavra in range(len(linha)):
-                    if palavra == 3 and linha != 0:
-                        print(f'R${linha[palavra]}', end=' ')
-                    else:
-                        print(linha[palavra].ljust(12), end=' ')
-                print()
-            input('digite enter para prosseguir')
+    memoria_csv = manipulador_de_csv.conversor_de_csv_em_lista(arq)
+    for linha in memoria_csv:
+        for palavra in range(len(linha)):
+            if palavra == 3 and linha != 0:
+                print(f'R${linha[palavra]}', end=' ')
+            else:
+                print(linha[palavra].ljust(12), end=' ')
+        print()
+    input('digite enter para prosseguir')
 
 
 
@@ -37,21 +33,18 @@ def ler_saldo_total(arq):
             KeyboardInterrupt:se houver algum input inesperado do usuário no meio da operação retorna ao menu.
             ValueError:se houver algum erro na operação interrope ela
     '''
+    memoria_csv = []
+    saldo = 0.0
+    memoria_csv = manipulador_de_csv.conversor_de_csv_em_lista(arq)
     try:
-        with open(arq, 'r', encoding='utf-8') as arquivo:
-            saldo = 0.0
-            arquivo_csv = arquivo.readlines()
-            arquivo_csv_dados = arquivo_csv[1:len(arquivo_csv)]
-            try:
-                for linha in arquivo_csv_dados:
-                    saldo += float(linha.split(',')[3])
-                return(saldo)
-            except:
-                return('\33[31mErro\33[m')
-    except(KeyboardInterrupt):
-        print('\33[31mVoltando ao menu\33[m')
+        for linha in memoria_csv:
+            if linha[3].replace('.','').isdigit():
+                saldo += float(linha[3])
+        return(saldo)
     except:
+        print(saldo)
         print('\33[31mErro inesperado, reinicie o programa ou contate os devs\33[m')
+        
 
 
 
@@ -65,14 +58,13 @@ def ler_ultimo_index(arq):
         Returns:
            (int):retorna o numero do ultimo numero de transação, se não houver retorna 0.
     '''
-    with open(arq,'r') as arquivo:
-        mensagem = arquivo.readlines()
-        if len(mensagem) > 1:
-            for linha in mensagem:
-                ultima_linha = linha.split(',')
-            return (int(ultima_linha[0]))
-        else:
-            return(0)
+    memoria_csv = []
+    memoria_csv = manipulador_de_csv.conversor_de_csv_em_lista(arq)
+    if len(memoria_csv) > 1:
+        ultima_linha = memoria_csv[len(memoria_csv)-1]
+        return (int(ultima_linha[0]))
+    else:
+        return(0)
 
 
 
@@ -90,15 +82,14 @@ def achar_categoria(arq):
            (list):retorna uma lista das categorias registradas no arquivo csv sem repetição.
     '''
     categorias = []
+    memoria_csv = []
+    memoria_csv = manipulador_de_csv.conversor_de_csv_em_lista(arq)
     try:
-        with open(arq, 'r', newline='', encoding='utf-8') as arquivo:
-            linhas = arquivo.readlines()
-            for linha in linhas:
-                valores = linha.split(',')
-                categorias.append(valores[2])
-            categorias = list(set(categorias))
-            categorias.remove('categoria')
-            return(categorias)
+        for linha in memoria_csv:
+            categorias.append(linha[2])
+        categorias = list(set(categorias))
+        categorias.remove('categoria')
+        return(categorias)
     except:
         print('\33[31mErro inesperado, reinicie o programa ou contate os devs\33[m')
 
@@ -115,23 +106,22 @@ def ler_filtrado_por_categoria(arq):
             KeyboardInterrupt:se houver algum input inesperado do usuário reinicia a função.
     '''
     categorias = achar_categoria(arq)
-    with open(arq, 'r', encoding='utf-8') as arquivo:
-        lista_csv = arquivo.readlines()
-        while True:
-            try:
-                escolha = input(f"""Qual categoria você deseja vizualizar? 
-            entre: {categorias}
-            --> """).lower()
-                continuar = mostrador_de_resultado(categorias,escolha,lista_csv)
-                if not (continuar):
-                    break
-            
-            except(KeyboardInterrupt):
-                print("\33[32mEscolha uma das categorias!\33[m")
+    memoria_csv = manipulador_de_csv.conversor_de_csv_em_lista(arq)
+    while True:
+        try:
+            escolha = input(f"""Qual categoria você deseja vizualizar? 
+        entre: {categorias}
+        --> """).lower()
+            continuar = mostrador_de_resultado(categorias,escolha,memoria_csv)
+            if not (continuar):
+                break
+        
+        except(KeyboardInterrupt):
+            print("\33[32mEscolha uma das categorias!\33[m")
 
 
 
-def mostrador_de_resultado(categorias,escolha,lista_csv):
+def mostrador_de_resultado(categorias,escolha,memoria_csv):
     '''Recebe como parâmetro 
      
        e espera um input de uma categoria existente a ser
@@ -146,8 +136,7 @@ def mostrador_de_resultado(categorias,escolha,lista_csv):
            (boll):retorna verdadeiro se essa sessão deve ser reiniciada no loop, retorna falso para voltar ao menu
     '''
     if escolha in categorias:
-        for linha in lista_csv:
-            linha = linha.split(',')
+        for linha in memoria_csv:
             if linha[0] == 'ordem':
                 print('ordem'.ljust(12), 'nome'.ljust(12), 'categoria'.ljust(12), 'valor'.ljust(12), 'data'.ljust(12), 'hora')
             for index in range(len(linha)):

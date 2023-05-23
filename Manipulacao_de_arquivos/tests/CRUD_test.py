@@ -1,4 +1,4 @@
-import Manipulacao_de_arquivos.CRUD as crud
+import CRUD.deletador_de_dados as crud
 import Manipulacao_de_arquivos.criação_de_arquivo as ca
 
 arq = ca.criararquivo()
