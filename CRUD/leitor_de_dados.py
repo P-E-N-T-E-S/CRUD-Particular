@@ -1,5 +1,6 @@
 from Manipulacao_de_arquivos import manipulador_de_csv
 
+
 def ler(arq):
     '''Recebe como parametro o nome do arquivo csv de banco de dados em que mostrara no terminal linha a linha
     formatado como tabela. Tendo formatações especiais dependendo do valor de cada posição, como nas posições
@@ -35,10 +36,12 @@ def ler_saldo_total(arq):
     '''
     memoria_csv = []
     saldo = 0.0
-    memoria_csv = manipulador_de_csv.conversor_de_csv_em_lista(arq)
+    memoria_csv = manipulador_de_csv.conversor_de_csv_em_lista(arq='controle.csv')
+    print()
     try:
         for linha in memoria_csv:
-            if linha[3].replace('.','').isdigit():
+            print(linha)
+            if linha[3] != 'valor':
                 saldo += float(linha[3])
         return(saldo)
     except:
