@@ -40,7 +40,7 @@ def verificador_de_input_valido(msg):
     else:
         print('\33[31mValor Inválido indentificado: virgula(,)\33[m')
         sleep(0.5)
-        print('\33[32mSubstituindo virgula(,) por ifem(-)\33[m')
+        print('\33[32mSubstituindo virgula(,) por hífen(-)\33[m')
         sleep(2)
         return valor.replace(',','-')
 

@@ -1,7 +1,29 @@
-import os
 nome_do_arquivo_de_teste = 'controle.csv'
 
-if not(os.path.exists(nome_do_arquivo_de_teste)):
+
+def conferirarquivo(nome): 
+    '''Verifica a existencia do arquivo csv para salvar os dados das transações.
+
+        Parameters:
+            nome(str):nome do arquivo a ser vertificado.
+
+        Raises:
+            AttributeError: se houver falha em abrir o arquivo muda o valor da variável existencia para False.
+
+        Returns:
+           bool:retorna verdadeiro se o arquivo com esse nome existe.
+    '''
+
+    existencia = True
+    try:
+        a = open(nome, 'rt')
+        a.close()
+    except:
+        existencia = False
+    return(existencia)
+
+
+if not(conferirarquivo(nome=nome_do_arquivo_de_teste)):
     with open(nome_do_arquivo_de_teste,'x') as arquivo_de_teste:
         memoria_csv =[
                     'ordem,nome,categoria,valor,data,hora\n',
