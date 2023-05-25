@@ -1,4 +1,8 @@
+import os
+from time import sleep
+
 from Manipulacao_de_arquivos import manipulador_de_csv
+from Formatacao.Formatacao_Menu import leiaInt
 
 
 def ler(arq):
@@ -47,8 +51,6 @@ def ler_saldo_total(arq):
     except:
         print(saldo)
         print('\33[31mErro inesperado, reinicie o programa ou contate os devs\33[m')
-        
-
 
 
 def ler_ultimo_index(arq):
@@ -70,7 +72,6 @@ def ler_ultimo_index(arq):
         return(0)
 
 
-
 def achar_categoria(arq):
     '''Recebe como parâmetro nome do arquivo csv de banco de dados filtrando apenas os valores de categorias das 
     transações(index 2) e retorna uma lista com as categorias sem repetição.
@@ -82,7 +83,7 @@ def achar_categoria(arq):
             AttributeError:se houver algum erro inesperado na manipulação do arquivo volta ao menu.
 
         Returns:
-           (list):retorna uma lista das categorias registradas no arquivo csv sem repetição.
+           list(str):retorna uma lista das categorias registradas no arquivo csv sem repetição.
     '''
     categorias = []
     memoria_csv = []
@@ -96,6 +97,27 @@ def achar_categoria(arq):
     except:
         print('\33[31mErro inesperado, reinicie o programa ou contate os devs\33[m')
 
+
+def leitor_de_escolha_de_index(memoria_csv):
+    '''Recebe como parâmetro uma matriz com todos os dados das transações e retorna a escolha(index) da transação
+    que será alterado ou deletado.
+
+        Parameters:
+            memoria_csv (list):uma matriz com todos os dados das transações.
+
+        Returns:
+           int:retorna a escolha da transação(do index da transação) feita pelo usuário.
+    '''
+    while True:
+        escolha = leiaInt('qual transação deseja alterar? (por index)')
+        if not(escolha < 1):
+            for linha in range(len(memoria_csv)):
+                if memoria_csv[linha][0] == escolha:
+                    print(f'{memoria_csv[linha][0]} - {memoria_csv[linha][1]}, {memoria_csv[linha][2]}, {memoria_csv[linha][3]}, {memoria_csv[linha][4]}, {memoria_csv[linha][5]}')
+            return escolha
+        else:
+            print('\33[31mO numero 0 não é uma opção!\33[m')
+            sleep(2)
 
 
 def ler_filtrado_por_categoria(arq):
@@ -112,7 +134,7 @@ def ler_filtrado_por_categoria(arq):
     memoria_csv = manipulador_de_csv.conversor_de_csv_em_lista(arq)
     while True:
         try:
-            escolha = input(f"""Qual categoria você deseja vizualizar? 
+            escolha = input(f"""Qual categoria você deseja visualizar? 
         entre: {categorias}
         --> """).lower()
             continuar = mostrador_de_resultado(categorias,escolha,memoria_csv)
@@ -122,6 +144,38 @@ def ler_filtrado_por_categoria(arq):
         except(KeyboardInterrupt):
             print("\33[32mEscolha uma das categorias!\33[m")
 
+
+def leitor_de_categoria(categorias):
+    '''Recebe a lista de categorias computadas, e lê o input do do usuário, e, retona uma categoria nova
+    válida ou uma existente.
+
+        Args:
+            categorias(list):uma lista das categorias existentes.
+
+        Returns:
+            str:retorna a categoria, ou a escolhida, ou uma nova.
+    '''    
+    while True:
+        mensagem = f'escolha a categoria da transação:\nentre: {categorias}\nou digite [categoria] para adicionar uma nova categoria(sem virgula): '
+        try:
+            categoria = input(mensagem).lower()
+
+            if categoria == 'categoria':
+                categoria = input('digite a nova categoria: ').lower()
+
+                if categoria.find(',') == -1:
+                    return categoria
+                else:
+                    print('\33[31mInsira uma categoria válida(sem virgula)\33[m')
+                    sleep(2)
+            else:
+                if categoria in categorias:
+                    return categoria
+                else:
+                    print('\33[31mInsira uma categoria válida\33[m')
+                    os.system('cls')
+        except(KeyboardInterrupt):
+            print("\33[31mEscolha uma das categorias!\33[m")
 
 
 def mostrador_de_resultado(categorias,escolha,memoria_csv):
@@ -136,7 +190,7 @@ def mostrador_de_resultado(categorias,escolha,memoria_csv):
             escolha(str):a categoria escolhida para filtrar os resultados
 
         Returns:
-           (boll):retorna verdadeiro se essa sessão deve ser reiniciada no loop, retorna falso para voltar ao menu
+           boll:retorna verdadeiro se essa sessão deve ser reiniciada no loop, retorna falso para voltar ao menu
     '''
     if escolha in categorias:
         for linha in memoria_csv:

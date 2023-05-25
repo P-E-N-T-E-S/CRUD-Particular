@@ -1,4 +1,4 @@
-import os
+from time import sleep
 from CRUD import leitor_de_dados as leitor
 from Formatacao.Formatacao_Menu import leiaFloat
 
@@ -7,7 +7,7 @@ def verificador_de_cancelamento():
     '''Verifica se o usuário deseja cancelar a operação, atraves da verificação do input do usuário.
 
         Returns:
-           (bool):retorna verdadeiro se o usuário digitou ok, do contrário retorna falso.
+           bool:retorna verdadeiro se o usuário digitou ok, do contrário retorna falso.
     '''
     while True:
         cancelamento_input = input('digite [ok] para prosseguir ou [cancelar] para não registrar: ').lower()
@@ -19,63 +19,48 @@ def verificador_de_cancelamento():
             else:
                 return False 
 
-def classificador_de_valor(valor):
-    '''Recebe o valor da transação e apartir da escolha do usuário converte para um gasto(negativo) ou
-    ganho(positivo).
 
+def classificador_de_valor(valor):
+    '''Recebe o valor da transação e apartir da escolha do usuário converte para um gasto(negativo) ou ganho(positivo).
         Parameters:
-            valor(int):O valor da transação.
+            valor (int):O valor da transação.
 
         Returns:
-           (int):retorna o valor convertido para o sinal desejado.
+           int:retorna o valor convertido para o sinal desejado.
     '''
     situacao = input('Você gastou ou recebeu esse dinheiro?[Recebi] ou [Gastei]: ')
     if situacao.lower() in ['gastei']:
         valor = valor * -1
     return valor
 
-
-def leitor_de_categoria(categorias):
-    '''Recebe a lista de categorias computadas, e lê o input do do usuário, e, retona uma categoria nova
-    válida ou uma existente.
-
-        Parameters:
-            categorias(list):uma lista das categorias existentes.
-
-        Returns:
-            (str):retorna a categoria, ou a escolhida, ou uma nova.
-    '''    
-    while True:
-        mensagem = f'escolha a categoria da transação:\nentre: {categorias}\nou digite [categoria] para adicionar uma nova categoria: '
-        categoria = input(mensagem)
-        if categoria == 'categoria':
-            categoria = input('digite a nova categoria: ').lower()
-            return categoria.lower()
-        else:
-            if categoria in categorias:
-                return categoria
-            else:
-                print('\33[31mInsira uma categoria válida\33[m')
-                os.system('cls')
-
+def verificador_de_input_valido(msg):
+    valor = input(msg)
+    if valor.find(',') == -1:
+        return valor
+    else:
+        print('\33[31mValor Inválido indentificado: virgula(,)\33[m')
+        sleep(0.5)
+        print('\33[32mSubstituindo virgula(,) por ifem(-)\33[m')
+        sleep(2)
+        return valor.replace(',','-')
 
 def adicionar(arq, ordem, data, hora):
     '''Recebe como parâmetro nome do arquivo csv de banco de dados e algumas informações da transação, e adiciona as
     informações os inputs do usuario para criar uma nova transação e registrar ela no arquivo.
 
     Parameters:
-        arq(str):nome do arquivo csv de banco de dados.
-        ordem(int):posição da ultima transação.
-        data(str):data da transação
-        hora(str):hora da transação
+        arq (str):nome do arquivo csv de banco de dados.
+        ordem (int):posição da ultima transação.
+        data (str):data da transação
+        hora (str):hora da transação
 
     Raises:
         KeyboardInterrupt:se o usuário digitar algo no meio da operação interrompe a função.
     '''
     categorias = leitor.achar_categoria(arq)
-    nome = input("Digite o nome da transação: ")
+    nome = verificador_de_input_valido("Digite o nome da transação: ")
     try:
-        categoria_da_transação = leitor_de_categoria(categorias)
+        categoria_da_transação = leitor.leitor_de_categoria(categorias)
         valor = leiaFloat("Digite o valor da transação: ")
         valor = classificador_de_valor(valor)
         print(f"a nova transação será: {ordem +1},{nome},{categoria_da_transação},{valor}0,{data},{hora}")

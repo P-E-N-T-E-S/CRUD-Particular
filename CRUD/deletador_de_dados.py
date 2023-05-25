@@ -2,6 +2,7 @@ from CRUD import atualizador_de_dados as atualizador
 from CRUD import leitor_de_dados as leitor
 
 from Manipulacao_de_arquivos import manipulador_de_csv
+from time import sleep
 
 
 def deletar(arq):
@@ -17,7 +18,7 @@ def deletar(arq):
     '''
     memoria_csv = manipulador_de_csv.conversor_de_csv_em_lista(arq)
     leitor.ler(arq)
-    escolha = atualizador.leitor_de_escolha_de_index(memoria_csv)
+    escolha = leitor.leitor_de_escolha_de_index(memoria_csv)
     memoria_csv.pop(escolha)
 
     with open(arq, 'w', encoding='utf-8', newline='') as arquivo:
@@ -29,3 +30,6 @@ def deletar(arq):
                 linha[0] = str(nova_ordem)
                 linhaformat = ','.join(linha)
                 arquivo.write(f'{linhaformat}\n')
+        print('\33[31mTransação atualizada!\33[m')
+        sleep(2)
+

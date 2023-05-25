@@ -10,7 +10,7 @@ def conversor_de_csv_em_lista(arq):
             KeyboardInterrupt:
             ValueError:
         Returns:
-           (list):retorna uma matriz dos valores do arquivo csv
+           list:retorna uma matriz dos valores do arquivo csv
     '''
     memoria_csv = []
     try:

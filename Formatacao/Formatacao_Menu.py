@@ -10,8 +10,8 @@ def leiaInt(msg):
             KeyboardInterrupt:se o programa for interrompido pelo usuário.
                
         Returns:
-           (int):em caso de nenhuma escolha retorna 0.\n
-           (int):se a operação ocorreu com sucesso retona o numero esperado.
+           int:em caso de nenhuma escolha retorna 0.\n
+           int:se a operação ocorreu com sucesso retona o numero esperado.
         
     '''
     while True:
@@ -24,7 +24,8 @@ def leiaInt(msg):
             return 0
         else:
             return num
-        
+
+
 def leiaFloat(msg):
     '''Recebe como parametro uma mensagem a ser colocada no terminal, e pede um numero como input,
     verifica se o input pode ser convertido para float, se não for mostra uma mensagem de erro e pede novamente.
@@ -37,8 +38,8 @@ def leiaFloat(msg):
             KeyboardInterrupt:se o programa for interrompido pelo usuário.
                
         Returns:
-           (float):em caso de nenhuma escolha retorna 0.\n
-           (float):se a operação ocorreu com sucesso retona o numero esperado.
+           float:em caso de nenhuma escolha retorna 0.\n
+           float:se a operação ocorreu com sucesso retona o numero esperado.
         
     '''
     while True:
@@ -52,15 +53,17 @@ def leiaFloat(msg):
         else:
             return num
 
+
 def linha(tamanho = 42):
     '''Função responsável por printar linhas, para formatação dos menus.
 
         Parameters:
             tamanho(int):tamanho da linha para formatação, por padrão valor 42.
         Returns:
-           (str):retorna a linha para formatação.
+           str:retorna a linha para formatação.
     '''
     return "-" * tamanho
+
 
 def cabeçalho(txt):
     '''Transforma um texto em um formato de menu centralizado.
@@ -71,6 +74,7 @@ def cabeçalho(txt):
     print(linha())
     print(txt.center(42))
     print(linha())
+
 
 def topicos(topicos):
     '''Recebe o input como lista e apresenta essa lista em formato de tópicos usando um for e formatando todos os topicos.
@@ -83,6 +87,7 @@ def topicos(topicos):
         print(topico.ljust(42))
     print(linha())
 
+
 def menu(sessoes):
     '''Recebe as opções do menu em forma de listade strings e transforma a lista em formato do menu além de receber o
     input do usuário e retornando a opção escolhida.
@@ -90,7 +95,7 @@ def menu(sessoes):
         Parameters:
             sessoes(list):lista de opções do menu que guiaram a cada tela.
         Returns:
-           (int):retorna a opção escolhida pelo usuário.
+           int:retorna a opção escolhida pelo usuário.
     '''
     opcao = 1
     for item in sessoes:
