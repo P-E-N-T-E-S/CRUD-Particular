@@ -14,4 +14,4 @@ with open('controle.csv', 'r', encoding='utf-8') as arquivo:
             if l[2] == escolha:
                 print(l[a], end='\t')
         if l[2] == escolha:
-            print()
+            print('')
