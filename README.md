@@ -1,6 +1,3 @@
-Aqui está o README no formato de código Markdown:
-
-```markdown
 # README - Documentação dos Códigos
 
 Este é um README que fornece documentação para os códigos neste repositório. Ele contém informações sobre os diferentes arquivos, suas funcionalidades e como executá-los corretamente.
