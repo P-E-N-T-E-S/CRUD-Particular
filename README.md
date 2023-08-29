@@ -70,3 +70,7 @@ Para executar o aplicativo, certifique-se de ter todos os arquivos necessários 
     </td>
   </tr>
 </table>
+
+## License
+
+[MIT](https://github.com/P-E-N-T-E-S/Kolekto/blob/master/LICENSE.md)
