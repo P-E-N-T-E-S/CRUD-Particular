@@ -60,14 +60,6 @@ Para executar o aplicativo, certifique-se de ter todos os arquivos necessários 
         </sub>
       </a>
     </td>
-    <td align="center">
-      <a href="https://github.com/Sofia-Saraiva">
-        <img src="https://avatars.githubusercontent.com/Sofia-Saraiva" width="100px;" alt="Foto de Sofia"/><br>
-        <sub>
-          <b>Sofia Saraiva</b>
-        </sub>
-      </a>
-    </td>
   </tr>
 </table>
 
