@@ -1,8 +1,8 @@
-# README - Documentação dos Códigos
+# Documentação dos Códigos 📜
 
 Este é um README que fornece documentação para os códigos neste repositório. Ele contém informações sobre os diferentes arquivos, suas funcionalidades e como executá-los corretamente.
 
-## Arquivos
+## Arquivos 📂
 
 1. **app.py**: Este é o arquivo principal que contém a lógica principal do aplicativo. Ele importa outros módulos e realiza operações com base nas escolhas do usuário. O programa começa limpando a tela e cria um arquivo com a função `ca.criararquivo()`. Em seguida, entra em um loop while para exibir um menu e aguardar as entradas do usuário. Dependendo da escolha do usuário, diferentes ações são executadas, como visualizar transações, adicionar, atualizar ou excluir dados, ou encerrar o programa.
 
@@ -20,11 +20,11 @@ Este é um README que fornece documentação para os códigos neste repositório
 
 8. **.gitignore**: Este arquivo contém as configurações do Git para ignorar certos arquivos e diretórios durante o versionamento. Ele especifica quais arquivos e tipos de arquivos devem ser excluídos do controle de versão. Isso inclui arquivos compilados, arquivos de configuração específicos do ambiente e arquivos gerados automaticamente.
 
-## Execução
+## Execução 🖱️
 
 Para executar o aplicativo, certifique-se de ter todos os arquivos necessários no mesmo diretório. Em seguida, execute o arquivo `app.py` usando o interpretador Python. O programa exibirá um menu e aguardará as entradas do usuário. Siga as instruções exibidas no menu para realizar as diferentes
 
-   ## Membros
+   ## Membros 👨‍🏭
 
 <table>
   <tr>
